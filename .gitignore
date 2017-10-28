@@ -1,0 +1,5 @@
+*.swp
+.netrwhist
+spell/*.spl
+pack
+spell
