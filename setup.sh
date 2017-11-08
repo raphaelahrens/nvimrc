@@ -6,8 +6,8 @@ if [ ! -d "$NVIM_PATH" ]; then
     ln -s "$PWD"  "$NVIM_PATH"
 fi
 
-#pip2 install --user neovim
-#pip3 install --user neovim
+python2 -m pip install --user neovim
+python3 -m pip install --user neovim
 
 minpack_path="pack/minpac/opt/minpac"
 if [ ! -d "$minpack_path" ]; then
