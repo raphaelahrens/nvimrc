@@ -16,15 +16,17 @@ if [ ! -d "$minpack_path" ]; then
     git clone https://github.com/k-takata/minpac.git pack/minpac/opt/minpac
 fi
 
-nvim -c ":source packages.vim| q"
+nvim -c 'execute ":source packages.vim" | echo "" | qall!'
 printf "\n"
 
-ycm_path="pack/minpac/start/YouCompleteMe/"
-if [ -d "$ycm_path" ]; then
-    (cd "$ycm_path";
-     git submodule update --init --recursive;
-    ./install.py --tern-completer
-    )
+if [ "$BUILD_YCM" = "TRUE" ]; then
+    ycm_path="pack/minpac/start/YouCompleteMe/"
+    if [ -d "$ycm_path" ]; then
+        (cd "$ycm_path";
+         git submodule update --init --recursive;
+        ./install.py --tern-completer
+        )
+    fi
 fi
 
 raspell_path="pack/minpac/start/raspell/"
