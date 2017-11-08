@@ -2,8 +2,12 @@
 
 NVIM_PATH="$HOME/.config/nvim"
 if [ ! -d "$NVIM_PATH" ]; then
+    mkdir -p "$HOME/.config"
     ln -s "$PWD"  "$NVIM_PATH"
 fi
+
+#pip2 install --user neovim
+#pip3 install --user neovim
 
 minpack_path="pack/minpac/opt/minpac"
 if [ ! -d "$minpack_path" ]; then
@@ -16,17 +20,16 @@ nvim -c ":source packages.vim| q"
 printf "\n"
 
 ycm_path="pack/minpac/start/YouCompleteMe/"
-if [ -d $ycm_path ]; then
-    (cd $ycm_path;
+if [ -d "$ycm_path" ]; then
+    (cd "$ycm_path";
      git submodule update --init --recursive;
     ./install.py --tern-completer
     )
 fi
 
 raspell_path="pack/minpac/start/raspell/"
-if [ -d $raspell_path ]; then
-    (cd $raspell_path;
+if [ -d "$raspell_path" ]; then
+    (cd "$raspell_path";
      make
      )
 fi
-
