@@ -16,7 +16,7 @@ if [ ! -d "$minpack_path" ]; then
     git clone https://github.com/k-takata/minpac.git pack/minpac/opt/minpac
 fi
 
-nvim -c 'execute ":source packages.vim" | echo "" | qall!'
+nvim -c 'execute ":source packages.vim"'
 printf "\n"
 
 if [ "$BUILD_YCM" = "TRUE" ]; then
@@ -24,7 +24,7 @@ if [ "$BUILD_YCM" = "TRUE" ]; then
     if [ -d "$ycm_path" ]; then
         (cd "$ycm_path";
          git submodule update --init --recursive;
-        ./install.py --tern-completer
+        python3 ./install.py --tern-completer
         )
     fi
 fi
