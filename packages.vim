@@ -2,7 +2,6 @@
 packadd minpac
 
 call minpac#init()
-call minpac#add('Valloric/YouCompleteMe', {'name': 'YouCompleteMe'})
 call minpac#add('tpope/vim-fugitive', {'name': 'fugitive'})
 call minpac#add('sjl/gundo.vim', {'name': 'gundo'})
 call minpac#add('SirVer/ultisnips', {'name': 'ultisnips'})
@@ -14,8 +13,10 @@ call minpac#add('vim-scripts/vimwiki', {'name': 'vimwiki'})
 call minpac#add('AndrewRadev/linediff.vim', {'name': 'linediff'})
 call minpac#add('w0rp/ale', {'name': 'ale'})
 call minpac#add('mhinz/vim-grepper', {'name': 'grepper'}) 
+call minpac#add('Valloric/YouCompleteMe', {'name': 'ycm'})
 
-call minpac#add('git@github.com:raphaelahrens/spell.git', {'name': 'raspell'})
+call minpac#add('raphaelahrens/spell', {'name': 'raspell'})
+call minpac#add('raphaelahrens/timesheet.vim', {'name': 'timesheet'})
 
 " OPT
 call minpac#add('vim-scripts/confluencewiki.vim', {'type': 'opt', 'name': 'confluencewiki.vim'})
@@ -26,7 +27,7 @@ call minpac#add('othree/yajs.vim', {'type': 'opt', 'name': 'yajs'})
 " Python
 call minpac#add('jmcantrell/vim-virtualenv', {'type': 'opt', 'name': 'vim-virtualenv'})
 " call minpac#add('nvie/vim-flake8', {'type': 'opt', 'name': 'vim-flake8'})
-" call minpac#add('hdima/python-syntax', {'type': 'opt', 'name': 'python-syntax'})
+call minpac#add('hdima/python-syntax', {'type': 'opt', 'name': 'python-syntax'})
 ""Elixir
 call minpac#add('elixir-lang/vim-elixir', {'type': 'opt', 'name': 'vim-elixir'})
 "" Pandoc

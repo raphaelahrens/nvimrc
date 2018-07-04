@@ -22,7 +22,8 @@ set ruler	    	" show the cursor position all the time
 set showcmd	    	" display incomplete commands
 set wildmenu        " show matched words of tab completion and highlight selected
 set wildmode=longest,list,full " complete longest match and then show menu
-set completeopt=longest,menu,preview " complete longest match and then show menu
+" set completeopt=longest,menu,preview " complete longest match and then show menu
+set completeopt=preview,menuone,noselect " complete longest match and then show menu
 set scrolloff=1 
 set display+=lastline
 
@@ -211,6 +212,7 @@ vnoremap <silent> # :<C-U>
   \gvy?<C-R><C-R>=substitute(
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
+nnoremap <Leader>* :Grepper -cword -noprompt<CR>
 
 if has("gui_running") || has("nvim")
     " C-Space seems to work under gVim and neovim
@@ -232,7 +234,7 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-function PrintFile(fname)
+function! PrintFile(fname)
    call system("cat " . a:fname . " | gtklp")
    call delete(a:fname)
    return v:shell_error
