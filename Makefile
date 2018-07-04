@@ -5,7 +5,7 @@ all: minpac spell
 	nvim -c 'execute ":source packages.vim" | echo "" | qall!'
 	printf "\n"
 
-config: ${HOME}/.config/nvim
+config:
 	printf "Setting up Config!\n"
 	mkdir -p "${HOME}/.config"
 	ln -s "${PWD}"  ${HOME}/.config/nvim
