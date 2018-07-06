@@ -225,6 +225,9 @@ else " no gui
   endif
 endif
 
+tnoremap <ESC> <C-\><C-n>
+tnoremap <C-v><ESC> <ESC>
+
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
