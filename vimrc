@@ -137,12 +137,13 @@ nnoremap <Leader>sl :SessionList<CR>
 nnoremap <Leader>l :!leo <C-R><C-W><CR>
 
 function! AddWord(word)
-    execute "terminal addword2 --choose \"".a:word."\""
+    execute "terminal addword --choose \"".a:word."\""
     if v:shell_error != 0
         return 1
     endif
 
-    let changedDict = system("cat ~/.vim/spell/.last-spell")
+    "let changedDict = system("cat ~/.vim/spell/.last-spell")
+    let changedDict = system("cat ~/.config/nvim/pack/minpac/start/raspell/spell")
     silent execute "mkspell! ".changedDict
     redraw!
     return 0
