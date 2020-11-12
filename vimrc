@@ -255,3 +255,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsEditSplit="vertical"
 
 let g:togglecursor_force = "xterm"
+
+let g:ale_completion_enabled = 1
+let g:ale_linters = {'rust': ['rls']}

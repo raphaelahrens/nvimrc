@@ -24,3 +24,4 @@ set complete+=kspell
 augroup markdowntant
     autocmd BufWritePre <buffer> :call s:FormatMarkdown()
 augroup END
+

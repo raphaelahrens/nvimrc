@@ -1,8 +1,8 @@
-.PHONY: all ycm spell
+.PHONY: all spell
 
 all: minpac spell
 	printf "Update Packages!\n"
-	nvim -c 'execute ":source packages.vim" | echo "" | qall!'
+	nvim -c 'execute ":source packages.vim" | echo ""'
 	printf "\n"
 
 config:
@@ -20,10 +20,10 @@ pack/minpac/opt/minpac/:
 	mkdir -p pack/minpac/opt
 	git clone https://github.com/k-takata/minpac.git pack/minpac/opt/minpac
 
-ycm: 
-	cd pack/minpac/start/ycm/ && \
-	 git submodule update --init --recursive && \
-	python3 ./install.py --tern-completer
+#ycm: 
+#	cd pack/minpac/start/ycm/ && \
+#	 git submodule update --init --recursive && \
+#	python3 ./install.py --tern-completer
 	
 
 spell: 
