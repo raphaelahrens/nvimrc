@@ -1,4 +1,4 @@
-.PHONY: all spell
+.PHONY: all spell minpac config
 
 all: minpac spell
 	printf "Update Packages!\n"
@@ -19,12 +19,6 @@ pack/minpac/opt/minpac/:
 	printf "Setting up Minpack!\n"
 	mkdir -p pack/minpac/opt
 	git clone https://github.com/k-takata/minpac.git pack/minpac/opt/minpac
-
-#ycm: 
-#	cd pack/minpac/start/ycm/ && \
-#	 git submodule update --init --recursive && \
-#	python3 ./install.py --tern-completer
-	
 
 spell: 
 	printf "Build spell dictionaries!\n"
