@@ -258,4 +258,8 @@ let g:UltiSnipsEditSplit="vertical"
 let g:togglecursor_force = "xterm"
 
 let g:ale_completion_enabled = 1
-let g:ale_linters = {'rust': ['rls']}
+let g:ale_linters = {'rust': ['analyzer']}
+let g:ale_hover_to_floating_preview =1
+let g:ale_floating_preview = 1
+
+let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
