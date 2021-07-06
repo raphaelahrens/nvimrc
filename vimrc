@@ -263,3 +263,5 @@ let g:ale_hover_to_floating_preview =1
 let g:ale_floating_preview = 1
 
 let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
+
+let g:rustfmt_autosave = 1
