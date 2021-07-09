@@ -7,19 +7,11 @@
   category: default
   opt: false
   local: false
-- name: SirVer/ultisnips
-  category: default
-  opt: false
-  local: false
 - name: airblade/vim-gitgutter
   category: default
   opt: false
   local: false
 - name: dannywillems/vim-icalendar
-  category: default
-  opt: false
-  local: false
-- name: dense-analysis/ale
   category: default
   opt: false
   local: false
@@ -62,6 +54,14 @@
 - name: mhinz/vim-rfc
   category: default
   opt: true
+  local: false
+- name: neovim/nvim-lspconfig
+  category: default
+  opt: false
+  local: false
+- name: nvim-lua/completion-nvim
+  category: default
+  opt: false
   local: false
 - name: raphaelahrens/spell
   category: default
