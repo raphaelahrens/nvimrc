@@ -133,6 +133,7 @@ for ls, cfg in pairs({
 -- Key mappings
 g.mapleader = 'ä'
 nmap('Q', 'gq')
+nmap('Y', 'y$')
 
 nmap('ü', '"0p')
 nmap('Ü', '"0P')
