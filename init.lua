@@ -4,7 +4,6 @@
 -------------------- HELPERS -------------------------------
 local api, cmd, fn, g = vim.api, vim.cmd, vim.fn, vim.g
 local opt, wo = vim.opt, vim.wo
-local fmt = string.format
 
 local home = os.getenv('HOME')
 local nvimrc = home ..'/.config/nvim/'
@@ -31,13 +30,11 @@ end
 
 
 local function add_word(word)
-
     local aw_exit = function ()
         local filename = pack_dir .. '/spell/spell/.last-spell'
         local f = assert(io.open(filename, 'r'))
         local changedDict = f:read('*all')
         f:close()
-        print('LOL' .. changedDict)
         cmd('mkspell! ' .. changedDict)
         cmd('redraw!')
     end
@@ -46,10 +43,10 @@ local function add_word(word)
         setl nospell
     ]])
     fn.termopen('addword --choose "' .. word ..'"',
-                {
-                    on_exit = aw_exit,
-                    buffer_nr = fn.bufnr('%')
-                }
+        {
+            on_exit = aw_exit,
+            buffer_nr = fn.bufnr('%')
+        }
     )
 end
 
@@ -62,6 +59,7 @@ local indent= 4
 
 opt.backspace = {'indent','eol','start'}
 opt.history = 10000
+opt.timeoutlen = 300
 opt.hidden = true
 opt.number = true
 opt.showcmd = true
@@ -81,7 +79,56 @@ opt.tabstop = indent
 opt.shiftwidth = indent
 opt.expandtab = true
 
-cmd 'colorscheme tantmustang'
+require('nord').set()
+
+require'which-key'.setup({})
+
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = {},  -- list of language that will be disabled
+    additional_vim_regex_highlighting = false,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+}
+
+-- opt.foldmethod='expr'
+-- opt.foldexpr='nvim_treesitter#foldexpr()'
+
+local on_attach = function(client)
+    require'completion'.on_attach(client)
+end
+local lsp = require('lspconfig')
+for ls, cfg in pairs({
+  ccls = {},
+  jsonls = {},
+  rust_analyzer = {
+      on_attach = on_attach,
+    settings = {
+        assist = {
+            importGranularity = "module",
+            importPrefix = "by_self",
+        },
+        cargo = {
+            loadOutDirsFromCheck = true
+        },
+        procMacro = {
+            enable = true
+        },
+      }
+  },
+  pylsp = {},
+}) do lsp[ls].setup(cfg) end
 
 -- Key mappings
 g.mapleader = 'ä'
@@ -142,32 +189,6 @@ imap('<C-Space>', '<C-n>')
 tmap('<ESC>', '<C-\\><C-n>')
 tmap('<C-v><ESC>', '<ESC>')
 
-local on_attach = function(client)
-    require'completion'.on_attach(client)
-end
-local lsp = require('lspconfig')
-for ls, cfg in pairs({
-  ccls = {},
-  jsonls = {},
-  rust_analyzer = {
-      on_attach = on_attach,
-    settings = {
-        assist = {
-            importGranularity = "module",
-            importPrefix = "by_self",
-        },
-        cargo = {
-            loadOutDirsFromCheck = true
-        },
-        procMacro = {
-            enable = true
-        },
-      }
-  },
-  pyls = {
-      root_dir = lsp.util.root_pattern('.git', fn.getcwd())
-  },
-}) do lsp[ls].setup(cfg) end
 
 nmap('<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 nmap('<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
@@ -178,5 +199,11 @@ nmap('<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
 nmap('<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>')
 nmap('<space>r', '<cmd>lua vim.lsp.buf.references()<CR>')
 nmap('<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+
+
+nmap('<leader>ff', "<cmd>lua require('telescope.builtin').find_files()<cr>")
+nmap('<leader>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>")
+nmap('<leader>fb', "<cmd>lua require('telescope.builtin').buffers()<cr>")
+nmap('<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>")
 
 g.togglecursor_force = 'xterm'
