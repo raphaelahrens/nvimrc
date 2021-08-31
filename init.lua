@@ -141,7 +141,7 @@ vmap('ü', '"0p')
 vmap('Ü', '"0P')
 
 nmap('°', '^')
-nmap('<leader>l', '<cmd>!leo <C-r><C-w><CR>')
+-- nmap('<leader>l', '<cmd>!leo <C-r><C-w><CR>')
 
 nmap('<leader>ö', '<cmd>lua n_add_word()<CR>')
 
@@ -191,15 +191,15 @@ tmap('<ESC>', '<C-\\><C-n>')
 tmap('<C-v><ESC>', '<ESC>')
 
 
-nmap('<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-nmap('<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-nmap('<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-nmap('<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
-nmap('<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-nmap('<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
-nmap('<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>')
-nmap('<space>r', '<cmd>lua vim.lsp.buf.references()<CR>')
-nmap('<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+nmap('<leader>l,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+nmap('<leader>l.', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+nmap('<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+nmap('<leader>ld', '<cmd>lua vim.lsp.buf.definition()<CR>')
+nmap('<leader>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+nmap('<leader>lh', '<cmd>lua vim.lsp.buf.hover()<CR>')
+nmap('<leader>lm', '<cmd>lua vim.lsp.buf.rename()<CR>')
+nmap('<leader>lr', '<cmd>lua vim.lsp.buf.references()<CR>')
+nmap('<leader>ls', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
 
 nmap('<leader>ff', "<cmd>lua require('telescope.builtin').find_files()<cr>")
