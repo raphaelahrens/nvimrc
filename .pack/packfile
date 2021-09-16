@@ -7,7 +7,15 @@
   category: default
   opt: false
   local: false
+- name: TimUntersberger/neogit
+  category: default
+  opt: false
+  local: false
 - name: airblade/vim-gitgutter
+  category: default
+  opt: false
+  local: false
+- name: alvarosevilla95/luatab.nvim
   category: default
   opt: false
   local: false
@@ -16,6 +24,10 @@
   opt: false
   local: false
 - name: dannywillems/vim-icalendar
+  category: default
+  opt: false
+  local: false
+- name: florentc/vim-tla
   category: default
   opt: false
   local: false
@@ -50,6 +62,10 @@
 - name: jupyter-vim/jupyter-vim
   category: default
   opt: true
+  local: false
+- name: kyazdani42/nvim-web-devicons
+  category: default
+  opt: false
   local: false
 - name: majutsushi/tagbar
   category: default
@@ -100,6 +116,14 @@
   opt: false
   local: false
 - name: shaunsingh/nord.nvim
+  category: default
+  opt: false
+  local: false
+- name: simrat39/symbols-outline.nvim
+  category: default
+  opt: false
+  local: false
+- name: sindrets/diffview.nvim
   category: default
   opt: false
   local: false
