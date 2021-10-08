@@ -65,7 +65,7 @@ opt.number = true
 opt.showcmd = true
 opt.wildmenu = true
 opt.wildmode = {'longest','list','full'}
-opt.completeopt = {'preview','menuone','noselect'}
+opt.completeopt = {'preview','menu','menuone','noselect'}
 opt.scrolloff = 5
 opt.formatoptions = 'tcqj'
 opt.mouse = 'a'
@@ -104,18 +104,68 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+require('gitsigns').setup()
+
+
+local cmp = require'cmp'
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      -- For `vsnip` user.
+      -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
+
+      -- For `luasnip` user.
+      -- require('luasnip').lsp_expand(args.body)
+
+      -- For `ultisnips` user.
+      -- vim.fn["UltiSnips#Anon"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'path' },
+    { name = 'spell' },
+
+    { name = 'buffer' },
+
+    -- For vsnip user.
+    -- { name = 'vsnip' },
+
+    -- For luasnip user.
+    -- { name = 'luasnip' },
+
+    -- For ultisnips user.
+    -- { name = 'ultisnips' },
+
+  }
+})
+
 -- opt.foldmethod='expr'
 -- opt.foldexpr='nvim_treesitter#foldexpr()'
 
 local on_attach = function(client)
-    require'completion'.on_attach(client)
+    require 'completion'.on_attach(client)
+    require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
 end
+
 local lsp = require('lspconfig')
 for ls, cfg in pairs({
-  ccls = {},
-  jsonls = {},
-  rust_analyzer = {
+  ccls = {
       on_attach = on_attach,
+    },
+  jsonls = {
+      on_attach = on_attach,
+    },
+  rust_analyzer = {
+    on_attach = on_attach,
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
     settings = {
         assist = {
             importGranularity = "module",
@@ -129,7 +179,10 @@ for ls, cfg in pairs({
         },
       }
   },
-  pylsp = {},
+  pylsp = {
+      on_attach = on_attach,
+      capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    },
 }) do lsp[ls].setup(cfg) end
 
 
@@ -215,7 +268,7 @@ nmap('<C-L>', ':nohlsearch<CR><C-L>')
 --   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
 --   \gV:call setreg('"', old_reg, old_regtype)<CR>
 nmap('<Leader>*', ':Grepper -cword -noprompt<CR>')
-imap('<C-Space>', '<C-n>')
+-- imap('<C-Space>', '<C-n>')
 
 tmap('<ESC>', '<C-\\><C-n>')
 tmap('<C-v><ESC>', '<ESC>')

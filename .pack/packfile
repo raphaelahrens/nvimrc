@@ -11,10 +11,6 @@
   category: default
   opt: false
   local: false
-- name: airblade/vim-gitgutter
-  category: default
-  opt: false
-  local: false
 - name: alvarosevilla95/luatab.nvim
   category: default
   opt: false
@@ -24,6 +20,10 @@
   opt: false
   local: false
 - name: dannywillems/vim-icalendar
+  category: default
+  opt: false
+  local: false
+- name: f3fora/cmp-spell
   category: default
   opt: false
   local: false
@@ -40,6 +40,22 @@
   opt: true
   local: false
 - name: honza/vim-snippets
+  category: default
+  opt: false
+  local: false
+- name: hrsh7th/cmp-buffer
+  category: default
+  opt: false
+  local: false
+- name: hrsh7th/cmp-nvim-lsp
+  category: default
+  opt: false
+  local: false
+- name: hrsh7th/cmp-path
+  category: default
+  opt: false
+  local: false
+- name: hrsh7th/nvim-cmp
   category: default
   opt: false
   local: false
@@ -64,6 +80,10 @@
   opt: true
   local: false
 - name: kyazdani42/nvim-web-devicons
+  category: default
+  opt: false
+  local: false
+- name: lewis6991/gitsigns.nvim
   category: default
   opt: false
   local: false
@@ -108,6 +128,10 @@
   opt: false
   local: false
 - name: raphaelahrens/timesheet.vim
+  category: default
+  opt: false
+  local: false
+- name: ray-x/lsp_signature.nvim
   category: default
   opt: false
   local: false
