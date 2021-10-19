@@ -126,7 +126,7 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
   sources = {
     { name = 'nvim_lsp' },
@@ -143,15 +143,13 @@ cmp.setup({
 
     -- For ultisnips user.
     -- { name = 'ultisnips' },
-
-  }
+  },
 })
 
 -- opt.foldmethod='expr'
 -- opt.foldexpr='nvim_treesitter#foldexpr()'
 
 local on_attach = function(client)
-    require 'completion'.on_attach(client)
     require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
 end
 
