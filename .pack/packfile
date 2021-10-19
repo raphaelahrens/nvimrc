@@ -7,10 +7,6 @@
   category: default
   opt: false
   local: false
-- name: TimUntersberger/neogit
-  category: default
-  opt: false
-  local: false
 - name: alvarosevilla95/luatab.nvim
   category: default
   opt: false
