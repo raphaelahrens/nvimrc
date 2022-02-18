@@ -11,6 +11,10 @@
   category: default
   opt: false
   local: false
+- name: Saecki/crates.nvim
+  category: default
+  opt: false
+  local: false
 - name: alvarosevilla95/luatab.nvim
   category: default
   opt: false
