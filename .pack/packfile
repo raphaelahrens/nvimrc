@@ -7,6 +7,10 @@
   category: default
   opt: false
   local: false
+- name: L3MON4D3/LuaSnip
+  category: default
+  opt: false
+  local: false
 - name: alvarosevilla95/luatab.nvim
   category: default
   opt: false
@@ -34,10 +38,6 @@
 - name: hdima/python-syntax
   category: default
   opt: true
-  local: false
-- name: honza/vim-snippets
-  category: default
-  opt: false
   local: false
 - name: hrsh7th/cmp-buffer
   category: default
