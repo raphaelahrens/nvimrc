@@ -81,6 +81,14 @@ opt.expandtab = true
 
 opt.tabline = '%!v:lua.require\'luatab\'.tabline()'
 
+-- cmd [[colorscheme substrata]]
+-- Example config in lua
+vim.g.nord_contrast = true
+vim.g.nord_borders = false
+vim.g.nord_disable_background = false
+vim.g.nord_italic = true
+
+-- Load the colorscheme
 require('nord').set()
 
 require'which-key'.setup({})
@@ -228,6 +236,8 @@ local on_attach = function(client)
     require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
 end
 
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 local lsp = require('lspconfig')
 for ls, cfg in pairs({
   ccls = {
@@ -238,7 +248,7 @@ for ls, cfg in pairs({
     },
   rust_analyzer = {
     on_attach = on_attach,
-    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    capabilities = capabilities,
     settings = {
         assist = {
             importGranularity = "module",
@@ -254,7 +264,7 @@ for ls, cfg in pairs({
   },
   pylsp = {
       on_attach = on_attach,
-      capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+      capabilities = capabilities,
     },
 }) do lsp[ls].setup(cfg) end
 
