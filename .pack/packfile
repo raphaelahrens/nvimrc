@@ -71,6 +71,10 @@
   category: default
   opt: true
   local: false
+- name: jose-elias-alvarez/null-ls.nvim
+  category: default
+  opt: false
+  local: false
 - name: jszakmeister/vim-togglecursor
   category: default
   opt: false
@@ -132,6 +136,10 @@
   opt: false
   local: false
 - name: rust-lang/rust.vim
+  category: default
+  opt: false
+  local: false
+- name: saadparwaiz1/cmp_luasnip
   category: default
   opt: false
   local: false

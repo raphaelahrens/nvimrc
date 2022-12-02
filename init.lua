@@ -11,7 +11,9 @@ local pack_dir = nvimrc .. 'pack/default/start/'
 
 local function map(mode, lhs, rhs, opts)
   local options = {noremap = true}
-  if opts then options = vim.tbl_extend('force', options, opts) end
+  if opts then
+      options = vim.tbl_extend('force', options, opts)
+  end
   api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
@@ -28,6 +30,7 @@ local function tmap(lhs, rhs, opts)
     map('t', lhs, rhs, opts)
 end
 
+g.mapleader = 'ä'
 
 local function add_word(word)
     local aw_exit = function ()
@@ -79,7 +82,6 @@ opt.tabstop = indent
 opt.shiftwidth = indent
 opt.expandtab = true
 
-opt.tabline = '%!v:lua.require\'luatab\'.tabline()'
 
 -- cmd [[colorscheme substrata]]
 -- Example config in lua
@@ -88,14 +90,14 @@ vim.g.nord_borders = false
 vim.g.nord_disable_background = false
 vim.g.nord_italic = true
 
+require('luatab').setup({})
 -- Load the colorscheme
 require('nord').set()
 
-require'which-key'.setup({})
+require('which-key').setup({})
 
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ignore_install = { "javascript" }, -- List of parsers to ignore installing
+require('nvim-treesitter.configs').setup {
+  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
     enable = true,              -- false will disable the whole extension
     disable = {},  -- list of language that will be disabled
@@ -112,88 +114,32 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require('gitsigns').setup()
-
-require('crates').setup {
-    smart_insert = true,
-    insert_closing_quote = true,
-    avoid_prerelease = true,
-    autoload = true,
-    autoupdate = true,
-    loading_indicator = true,
-    date_format = "%Y-%m-%d",
-    text = {
-        loading = "   Loading",
-        version = "   %s",
-        prerelease = "   %s",
-        yanked = "   %s",
-        nomatch = "   No match",
-        upgrade = "   %s",
-        error = "   Error fetching crate",
-    },
-    highlight = {
-        loading = "CratesNvimLoading",
-        version = "CratesNvimVersion",
-        prerelease = "CratesNvimPreRelease",
-        yanked = "CratesNvimYanked",
-        nomatch = "CratesNvimNoMatch",
-        upgrade = "CratesNvimUpgrade",
-        error = "CratesNvimError",
-    },
-    popup = {
-        autofocus = false,
-        copy_register = '"',
-        style = "minimal",
-        border = "none",
-        version_date = false,
-        max_height = 30,
-        min_width = 20,
-        text = {
-            title = "  %s ",
-            version = "   %s ",
-            prerelease = "  %s ",
-            yanked = "  %s ",
-            date = " %s ",
-            feature = "   %s ",
-            enabled = "  %s ",
-            transitive = "  %s ",
-        },
-        highlight = {
-            title = "CratesNvimPopupTitle",
-            version = "CratesNvimPopupVersion",
-            prerelease = "CratesNvimPopupPreRelease",
-            yanked = "CratesNvimPopupYanked",
-            feature = "CratesNvimPopupFeature",
-            enabled = "CratesNvimPopupEnabled",
-            transitive = "CratesNvimPopupTransitive",
-        },
-        keys = {
-            hide = { "q", "<esc>" },
-            select = { "<cr>" },
-            select_alt = { "s" },
-            copy_version = { "yy" },
-            toggle_feature = { "<cr>" },
-            goto_feature = { "gd", "K" },
-            jump_forward_feature = { "<c-i>" },
-            jump_back_feature = { "<c-o>" },
-        },
-    },
-    cmp = {
-        insert_closing_quote = true,
-        text = {
-            prerelease = "  pre-release ",
-            yanked = "  yanked ",
-        },
-    },
+require('telescope').setup{
+  pickers = {
+    man_pages = {
+      man_cmd = {"apropos", " "},
+    }
+  },
 }
 
+require('gitsigns').setup()
 
+require('crates').setup()
+
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local luasnip = require('luasnip')
+local snippet = require("snippet")
+luasnip.snippets = snippet
 local cmp = require'cmp'
 cmp.setup({
   snippet = {
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        luasnip.lsp_expand(args.body) -- For `luasnip` users.
       end,
   },
   mapping = {
@@ -206,6 +152,7 @@ cmp.setup({
       c = cmp.mapping.close(),
     }),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
+
   },
 --  sources = cmp.config.sources({
 --     { name = 'nvim_lsp' },
@@ -229,6 +176,7 @@ cmp.setup({
   )
 })
 
+
 -- opt.foldmethod='expr'
 -- opt.foldexpr='nvim_treesitter#foldexpr()'
 
@@ -236,7 +184,7 @@ local on_attach = function(client)
     require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
 end
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local lsp = require('lspconfig')
 for ls, cfg in pairs({
@@ -271,7 +219,6 @@ for ls, cfg in pairs({
 
 
 -- Key mappings
-g.mapleader = 'ä'
 nmap('Q', 'gq')
 nmap('Y', 'y$')
 
@@ -283,7 +230,7 @@ vmap('Ü', '"0P')
 nmap('°', '^')
 -- nmap('<leader>l', '<cmd>!leo <C-r><C-w><CR>')
 
-nmap('<leader>ö', '<cmd>lua n_add_word()<CR>')
+nmap('<leader>ö', '', {callback=n_add_word})
 
 
 nmap('<F7>', '<cmd>TagbarToggle<CR>')
@@ -313,38 +260,31 @@ vmap('K', ":m '<-2<CR>gv=gv")
 
 -- Use <C-L> to clear the highlighting of :set hlsearch.
 nmap('<C-L>', ':nohlsearch<CR><C-L>')
--- Search for selected text, forwards or backwards.
--- vnoremap <silent> * :<C-U>
---   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
---   \gvy/<C-R><C-R>=substitute(
---   \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
---   \gV:call setreg('"', old_reg, old_regtype)<CR>
--- vnoremap <silent> # :<C-U>
---   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
---   \gvy?<C-R><C-R>=substitute(
---   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
---   \gV:call setreg('"', old_reg, old_regtype)<CR>
 nmap('<Leader>*', ':Grepper -cword -noprompt<CR>')
--- imap('<C-Space>', '<C-n>')
 
 tmap('<ESC>', '<C-\\><C-n>')
 tmap('<C-v><ESC>', '<ESC>')
 
 
-nmap('<leader>l,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-nmap('<leader>l.', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-nmap('<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-nmap('<leader>ld', '<cmd>lua vim.lsp.buf.definition()<CR>')
-nmap('<leader>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-nmap('<leader>lh', '<cmd>lua vim.lsp.buf.hover()<CR>')
-nmap('<leader>lm', '<cmd>lua vim.lsp.buf.rename()<CR>')
-nmap('<leader>lr', '<cmd>lua vim.lsp.buf.references()<CR>')
-nmap('<leader>ls', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+nmap('<leader>l,', '', {callback=vim.lsp.diagnostic.goto_prev})
+nmap('<leader>l.', '', {callback=vim.lsp.diagnostic.goto_next})
+nmap('<leader>la', '', {callback=vim.lsp.buf.code_action})
+nmap('<leader>ld', '', {callback=vim.lsp.buf.definition})
+nmap('<leader>lf', '', {callback=vim.lsp.buf.formatting})
+nmap('<leader>lh', '', {callback=vim.lsp.buf.hover})
+nmap('<leader>lm', '', {callback=vim.lsp.buf.rename})
+nmap('<leader>lr', '', {callback=vim.lsp.buf.references})
+nmap('<leader>ls', '', {callback=vim.lsp.buf.document_symbol})
 
 
-nmap('<leader>ff', "<cmd>lua require('telescope.builtin').find_files()<cr>")
-nmap('<leader>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>")
-nmap('<leader>fb', "<cmd>lua require('telescope.builtin').buffers()<cr>")
-nmap('<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>")
+nmap('<leader>ff', '', {callback=require('telescope.builtin').find_files})
+nmap('<leader>fg', '', {callback=require('telescope.builtin').live_grep})
+nmap('<leader>fb', '', {callback=require('telescope.builtin').buffers})
+nmap('<leader>fh', '', {callback=require('telescope.builtin').help_tags})
+
+imap('<C-J>',   '', {callback=require('luasnip').expand_or_jump})
+imap('<C-S-J>', '', {callback=function() require('luasnip').jump(-1) end})
+imap('<C-B>',   '', {callback=function() require('luasnip').change_choice(1)end})
+imap('<C-S-B>', '', {callback=function() require('luasnip').change_choice(-1)end})
 
 g.togglecursor_force = 'xterm'
