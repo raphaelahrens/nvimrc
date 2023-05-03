@@ -95,7 +95,7 @@
   category: default
   opt: false
   local: false
-- name: mhinz/vim-grepper
+- name: mfussenegger/nvim-dap
   category: default
   opt: false
   local: false
@@ -144,6 +144,10 @@
   opt: false
   local: false
 - name: shaunsingh/nord.nvim
+  category: default
+  opt: false
+  local: false
+- name: simrat39/rust-tools.nvim
   category: default
   opt: false
   local: false
