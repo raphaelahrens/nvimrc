@@ -223,29 +223,29 @@ for ls, cfg in pairs({
         on_attach = on_attach,
         capabilities = capabilities,
         settings = {
-        ["rust-analyzer"] = {
-            imports = {
-                granularity = {
-                    group = "module",
+            ["rust-analyzer"] = {
+                imports = {
+                    granularity = {
+                        group = "module",
+                    },
+                    prefix = "self",
                 },
-                prefix = "self",
-            },
-            cargo = {
-                buildScripts = {
-                    enable = true,
+                cargo = {
+                    buildScripts = {
+                        enable = true,
+                    },
                 },
-            },
-            procMacro = {
-                enable = true
-            },
+                procMacro = {
+                    enable = true
+                },
+            }
         }
-    }
     },
     pylsp = {
         on_attach = on_attach,
         capabilities = capabilities,
     },
-    sumneko_lua = {
+    lua_ls = {
         on_attach = on_attach,
         capabilities = capabilities,
     },
