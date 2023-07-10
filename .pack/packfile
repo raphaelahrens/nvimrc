@@ -87,6 +87,10 @@
   category: default
   opt: false
   local: false
+- name: lewis6991/fileline.nvim
+  category: default
+  opt: false
+  local: false
 - name: lewis6991/gitsigns.nvim
   category: default
   opt: false
