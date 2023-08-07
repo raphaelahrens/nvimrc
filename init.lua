@@ -141,8 +141,8 @@ local has_words_before = function()
 end
 
 local luasnip = require('luasnip')
-local snippet = require('snippet')
-luasnip.snippets = snippet
+-- local snippet = require('snippet')
+-- luasnip.snippets = snippet
 local cmp = require 'cmp'
 cmp.setup({
     snippet = {
@@ -248,6 +248,13 @@ for ls, cfg in pairs({
     lua_ls = {
         on_attach = on_attach,
         capabilities = capabilities,
+        settings = {
+            Lua = {
+                runtime = {
+                version = 'Lua 5.1',
+            }
+        }
+}
     },
 }) do lsp[ls].setup(cfg) end
 
