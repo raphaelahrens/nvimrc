@@ -71,10 +71,6 @@
   category: default
   opt: true
   local: false
-- name: jose-elias-alvarez/null-ls.nvim
-  category: default
-  opt: false
-  local: false
 - name: jszakmeister/vim-togglecursor
   category: default
   opt: false
@@ -87,15 +83,23 @@
   category: default
   opt: false
   local: false
+- name: ldelossa/litee-calltree.nvim
+  category: default
+  opt: false
+  local: false
+- name: ldelossa/litee-symboltree.nvim
+  category: default
+  opt: false
+  local: false
+- name: ldelossa/litee.nvim
+  category: default
+  opt: false
+  local: false
 - name: lewis6991/fileline.nvim
   category: default
   opt: false
   local: false
 - name: lewis6991/gitsigns.nvim
-  category: default
-  opt: false
-  local: false
-- name: majutsushi/tagbar
   category: default
   opt: false
   local: false

@@ -182,16 +182,6 @@ cmp.setup({
     }
     )
 })
-
-local null_ls = require("null-ls")
-
-null_ls.setup({
-    sources = {
-        null_ls.builtins.completion.spell,
-        null_ls.builtins.code_actions.shellcheck
-    },
-})
-
 -- opt.foldmethod='expr'
 -- opt.foldexpr='nvim_treesitter#foldexpr()'
 
@@ -212,6 +202,21 @@ local on_attach = function(client)
     })
     require 'lsp_signature'.on_attach() -- Note: add in lsp client on-attach
 end
+
+-- configure the litee.nvim library 
+require('litee.lib').setup({
+    tree = {
+        icon_set = "codicons"
+    },
+    panel = {
+        orientation = "right",
+        panel_size  = 30
+    }
+})
+
+-- configure litee-symboltree.nvim
+require('litee.symboltree').setup({})
+require('litee.calltree').setup({})
 
 vim.lsp.set_log_level("debug")
 
@@ -245,6 +250,11 @@ for ls, cfg in pairs({
         on_attach = on_attach,
         capabilities = capabilities,
     },
+    clangd = {
+        cmd = {"/usr/local/bin/clangd15"},
+        on_attach = on_attach,
+        capabilities = capabilities,
+    },
     lua_ls = {
         on_attach = on_attach,
         capabilities = capabilities,
@@ -258,11 +268,8 @@ for ls, cfg in pairs({
     },
 }) do lsp[ls].setup(cfg) end
 
-
-
 -- Key mappings
 nmap('Q', 'gq', 'Format lines `gq`')
--- nmap('Y', 'y$', '')
 
 nmap('ü', '"0p', 'paste last yank')
 nmap('Ü', '"0P', 'paste last yank')
@@ -274,8 +281,6 @@ nmap('°', '^', 'Go to start of the line')
 
 nmap('<leader>ö', n_add_word, 'Add word to dictionary')
 
-
-nmap('<F7>', '<cmd>TagbarToggle<CR>', '')
 -- nmap('<F12>', '<cmd>split ~/notes<CR>')
 
 imap('<A-Down>', '<Esc>gja', 'move cursor down in wrap lines')
@@ -292,7 +297,6 @@ nmap('<C-S-Right>', ':cnext<CR>', ' Got to next buffer in the bufferlist')
 
 nmap('<Tab>', '>>_', 'ident line')
 nmap('<S-Tab>', '<<_', 'indent line')
--- imap('<S-Tab>', '<C-D>')
 vmap('<Tab>', '>gv', 'indent visual selection')
 vmap('<S-Tab>', '<gv', 'indent visual selection')
 
@@ -323,6 +327,8 @@ nmap('<leader>lh', vim.lsp.buf.hover, 'LSP hover')
 nmap('<leader>lm', vim.lsp.buf.rename, 'LSP rename')
 nmap('<leader>lr', vim.lsp.buf.references, 'LSP references')
 nmap('<leader>ls', vim.lsp.buf.document_symbol, 'LSP document symbol')
+nmap('<leader>lc', vim.lsp.buf.incoming_calls, 'LSP calls')
+nmap('<leader>lC', vim.lsp.buf.outgoing_calls, 'LSP calls')
 
 
 nmap('<leader>ff', require('telescope.builtin').find_files, 'Telescope find files')
