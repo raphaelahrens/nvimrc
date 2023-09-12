@@ -206,7 +206,7 @@ end
 -- configure the litee.nvim library 
 require('litee.lib').setup({
     tree = {
-        icon_set = "codicons"
+        icon_set = "nerd"
     },
     panel = {
         orientation = "right",
@@ -214,9 +214,87 @@ require('litee.lib').setup({
     }
 })
 
+
+local icon_set = {
+    Account         = "🗣",
+    Array           = "",
+    Bookmark        = "🏷",
+    Boolean         = "∧",
+    Calendar        = '🗓',
+    Check           = '✓',
+    CheckAll        = '🗸🗸',
+    Circle          = '🞆',
+    CircleFilled    = '●',
+    CirclePause     = '⦷',
+    CircleSlash     = '⊘',
+    CircleStop      = '⦻',
+    Class           = "𝓒",
+    Collapsed       = "▶",
+    Color           = "🖌",
+    Comment         = '🗩',
+    CommentExclaim  = '🗩',
+    Constant        = "",
+    Constructor     = "",
+    DiffAdded       = '+',
+    Enum            = "ℰ",
+    EnumMember      = "",
+    Event           = "🗲",
+    Expanded        = "▼",
+    Field           = "",
+    File            = "",
+    Folder          = "🗁",
+    Function        = "",
+    GitBranch       = ' ',
+    GitCommit       = '⫰',
+    GitCompare      = '⤄',
+    GitIssue        = '⊙',
+    GitMerge        = '⫰',
+    GitPullRequest  = '⬰',
+    GitRepo         = '🕮',
+    History         = '⟲',
+    IndentGuide     = "⎸",
+    Info            = '🛈',
+    Interface       = "ﰮ",
+    Key             = "🔐",
+    Keyword         = "",
+    Method          = "ƒ",
+    Module          = "",
+    MultiComment    = '🗩',
+    Namespace       = "[]",
+    Notebook        = "🕮",
+    Notification    = '🕭',
+    Null            = "null",
+    Number          = "#",
+    Object          = "{}",
+    Operator        = "+",
+    Package         = "",
+    Pass            = '🗸',
+    PassFilled      = '🗸',
+    Pencil          = '',
+    Property        = "",
+    Reference       = "⛉",
+    RequestChanges  = '⨪',
+    Separator       = "•",
+    Space           = " ",
+    String          = "𝓐",
+    Struct          = "𝓢",
+    Sync            = '🗘',
+    Text            = "\"",
+    TypeParameter   = "𝙏",
+    Unit            = "U",
+    Value           = "v",
+    Variable        = "",
+}
+
+
 -- configure litee-symboltree.nvim
-require('litee.symboltree').setup({})
+require('litee.symboltree').setup({
+    map_resize_keys = false,
+    icon_set_custom = icon_set
+})
 require('litee.calltree').setup({})
+
+require("symbols-outline").setup()
 
 vim.lsp.set_log_level("debug")
 
