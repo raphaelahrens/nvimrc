@@ -296,8 +296,6 @@ require('litee.calltree').setup({})
 
 require("symbols-outline").setup()
 
-vim.lsp.set_log_level("debug")
-
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local lsp = require('lspconfig')
