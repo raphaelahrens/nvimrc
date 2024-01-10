@@ -1,24 +1,30 @@
-
-local luasnip = require("luasnip")
--- some shorthands...
-local s = luasnip.snippet
-local sn = luasnip.snippet_node
-local t = luasnip.text_node
-local i = luasnip.insert_node
-local f = luasnip.function_node
-local c = luasnip.choice_node
-local d = luasnip.dynamic_node
-local r = luasnip.restore_node
-local l = require("luasnip.extras").lambda
-local rep = require("luasnip.extras").rep
-local p = require("luasnip.extras").partial
-local m = require("luasnip.extras").match
-local n = require("luasnip.extras").nonempty
-local dl = require("luasnip.extras").dynamic_lambda
+local ls = require("luasnip")
+local s = ls.snippet
+local sn = ls.snippet_node
+local isn = ls.indent_snippet_node
+local t = ls.text_node
+local i = ls.insert_node
+local f = ls.function_node
+local c = ls.choice_node
+local d = ls.dynamic_node
+local r = ls.restore_node
+local events = require("luasnip.util.events")
+local ai = require("luasnip.nodes.absolute_indexer")
+local extras = require("luasnip.extras")
+local l = extras.lambda
+local rep = extras.rep
+local p = extras.partial
+local m = extras.match
+local n = extras.nonempty
+local dl = extras.dynamic_lambda
 local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
-local types = require("luasnip.util.types")
 local conds = require("luasnip.extras.expand_conditions")
+local postfix = require("luasnip.extras.postfix").postfix
+local types = require("luasnip.util.types")
+local parse = require("luasnip.util.parser").parse_snippet
+local ms = ls.multi_snippet
+local k = require("luasnip.nodes.key_indexer").new_key
 return {
     -- When trying to expand a snippet, luasnip first searches the tables for
     -- each filetype specified in 'filetype' followed by 'all'.
@@ -32,6 +38,16 @@ return {
             t("#[derive("),
             i(1, "Debug"),
             t(")]"),
+        }),
+    },
+    markdown = {
+        s( "zmeta", {
+            t({    "---"}),
+            t({"", "title: "}), i(1),
+            t({"", "keywords:"}),
+            t({"", "  - "}), i(2),
+            t({"", "followup: "}), i(3),
+            t({"", "---"}),
         }),
     }
 }

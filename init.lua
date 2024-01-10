@@ -141,8 +141,8 @@ local has_words_before = function()
 end
 
 local luasnip = require('luasnip')
--- local snippet = require('snippet')
--- luasnip.snippets = snippet
+local snippet = require('snippet')
+luasnip.add_snippets(nil, snippet)
 local cmp = require 'cmp'
 cmp.setup({
     snippet = {
@@ -414,9 +414,9 @@ nmap('<leader>fg', require('telescope.builtin').live_grep, 'Telescope live grep'
 nmap('<leader>fb', require('telescope.builtin').buffers, 'Telescope buffers')
 nmap('<leader>fh', require('telescope.builtin').help_tags, 'Telescope help tags')
 
-imap('<C-J>', require('luasnip').expand_or_jump, 'LuaSnip expand or jump')
-imap('<C-S-J>', function() require('luasnip').jump(-1) end, 'LuaSnip jump back')
-imap('<C-B>', function() require('luasnip').change_choice(1) end, 'LuaSnip next choice')
-imap('<C-S-B>', function() require('luasnip').change_choice(-1) end, 'LuaSnip previous choice')
+imap('<C-J>', luasnip.expand_or_jump, 'LuaSnip expand or jump')
+imap('<C-S-J>', function() luasnip.jump(-1) end, 'LuaSnip jump back')
+imap('<C-B>', function() luasnip.change_choice(1) end, 'LuaSnip next choice')
+imap('<C-S-B>', function() luasnip.change_choice(-1) end, 'LuaSnip previous choice')
 
 g.togglecursor_force = 'xterm'
