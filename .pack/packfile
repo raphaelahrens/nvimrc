@@ -155,10 +155,6 @@
   category: default
   opt: false
   local: false
-- name: simrat39/rust-tools.nvim
-  category: default
-  opt: false
-  local: false
 - name: simrat39/symbols-outline.nvim
   category: default
   opt: false
