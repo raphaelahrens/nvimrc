@@ -396,15 +396,30 @@ require('which-key').register({
 }, { prefix = '<leader>' }
 )
 
-nmap('<leader>la', vim.lsp.buf.code_action, 'LSP code action')
-nmap('<leader>ld', vim.lsp.buf.definition, 'LSP definition')
-nmap('<leader>lf', vim.lsp.buf.format, 'LSP formatting')
-nmap('<leader>lh', vim.lsp.buf.hover, 'LSP hover')
-nmap('<leader>lm', vim.lsp.buf.rename, 'LSP rename')
-nmap('<leader>lr', vim.lsp.buf.references, 'LSP references')
-nmap('<leader>ls', vim.lsp.buf.document_symbol, 'LSP document symbol')
-nmap('<leader>lc', vim.lsp.buf.incoming_calls, 'LSP calls')
-nmap('<leader>lC', vim.lsp.buf.outgoing_calls, 'LSP calls')
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = 'LSP actions',
+  callback = function()
+    local opts = {buffer = true}
+
+    nmap('<leader>lC', vim.lsp.buf.outgoing_calls, 'LSP calls out', opts)
+    nmap('<leader>la', vim.lsp.buf.code_action, 'LSP code action', opts)
+    nmap('<leader>lc', vim.lsp.buf.incoming_calls, 'LSP calls in', opts)
+    nmap('<leader>lD', open_diagnostics, 'LSP open diagnostic', opts)
+    nmap('<leader>ld', vim.lsp.buf.definition, 'LSP definition', opts)
+    nmap('<leader>lf', vim.lsp.buf.format, 'LSP formatting', opts)
+    nmap('<leader>lh', vim.lsp.buf.hover, 'LSP hover', opts)
+    nmap('<leader>li', vim.lsp.buf.implementation, 'LSP calls', opts)
+    nmap('<leader>lm', vim.lsp.buf.rename, 'LSP rename', opts)
+    nmap('<leader>lr', vim.lsp.buf.references, 'LSP references', opts)
+    nmap('<leader>ls', vim.lsp.buf.document_symbol, 'LSP document symbol', opts)
+    nmap('<leader>lt', vim.lsp.buf.type_definition, 'LSP type definition', opts)
+    nmap('gd', vim.lsp.buf.definition, 'Goto definition', opts)
+    nmap('gD', vim.lsp.buf.declaration, 'Goto declaration', opts)
+    nmap('<C-S-Left>', vim.diagnostic.goto_prev, ' Got to previous buffer in the bufferlist', opts)
+    nmap('<C-S-Right>', vim.diagnostic.goto_next, ' Got to next buffer in the bufferlist', opts)
+  end
+})
+
 
 
 nmap('<leader>ff', require('telescope.builtin').find_files, 'Telescope find files')
