@@ -39,10 +39,6 @@
   category: default
   opt: false
   local: false
-- name: hdima/python-syntax
-  category: default
-  opt: true
-  local: false
 - name: hrsh7th/cmp-buffer
   category: default
   opt: false
@@ -59,25 +55,9 @@
   category: default
   opt: false
   local: false
-- name: inkarkat/vim-SpellCheck
-  category: default
-  opt: true
-  local: false
-- name: inkarkat/vim-ingo-library
-  category: default
-  opt: true
-  local: false
-- name: jmcantrell/vim-virtualenv
-  category: default
-  opt: true
-  local: false
 - name: jszakmeister/vim-togglecursor
   category: default
   opt: false
-  local: false
-- name: jupyter-vim/jupyter-vim
-  category: default
-  opt: true
   local: false
 - name: kyazdani42/nvim-web-devicons
   category: default
@@ -106,10 +86,6 @@
 - name: mfussenegger/nvim-dap
   category: default
   opt: false
-  local: false
-- name: mhinz/vim-rfc
-  category: default
-  opt: true
   local: false
 - name: neovim/nvim-lspconfig
   category: default
@@ -143,10 +119,6 @@
   category: default
   opt: false
   local: false
-- name: rust-lang/rust.vim
-  category: default
-  opt: false
-  local: false
 - name: saadparwaiz1/cmp_luasnip
   category: default
   opt: false
@@ -162,14 +134,6 @@
 - name: sindrets/diffview.nvim
   category: default
   opt: false
-  local: false
-- name: vim-pandoc/vim-pandoc-syntax
-  category: default
-  opt: true
-  local: false
-- name: vim-scripts/rfc-syntax
-  category: default
-  opt: true
   local: false
 - name: wsdjeg/vim-todo
   category: default
