@@ -1,5 +1,15 @@
 -- neovim config
--- github.com/ojroques
+--
+function _G.put(...)
+  local objects = {}
+  for i = 1, select('#', ...) do
+    local v = select(i, ...)
+    table.insert(objects, vim.inspect(v))
+  end
+
+  print(table.concat(objects, '\n'))
+  return ...
+end
 
 -------------------- HELPERS -------------------------------
 local cmd = vim.cmd
@@ -66,6 +76,7 @@ local function n_add_word()
     add_word(word)
 end
 
+
 local indent = 4
 
 opt.backspace = { 'indent', 'eol', 'start' }
@@ -99,6 +110,18 @@ vim.g.nord_borders = false
 vim.g.nord_disable_background = false
 vim.g.nord_italic = true
 
+vim.diagnostic.config({
+    virtual_text = true,
+    float = {
+        focusable = false,
+        close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
+        border = 'single',
+        source = 'always',
+        prefix = ' ',
+        scope = 'line',
+    }
+})
+
 require('luatab').setup({})
 -- Load the colorscheme
 require('nord').set()
@@ -130,6 +153,32 @@ require('telescope').setup {
         }
     },
 }
+
+require("projections").setup({
+    auto_restore = true,
+})
+
+---- Bind <leader>fp to Telescope projections
+--require('telescope').load_extension('projections')
+--
+---- Autostore session on VimExit
+--local Session = require("projections.session")
+--vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
+--    callback = function() Session.store(vim.loop.cwd()) end,
+--})
+--
+--vim.api.nvim_create_autocmd({ "VimEnter" }, {
+--    callback = function()
+--        if vim.fn.argc() ~= 0 then return end
+--        local session_info = Session.info(vim.loop.cwd())
+--        if session_info == nil then
+--            Session.restore_latest()
+--        else
+--            Session.restore(vim.loop.cwd())
+--        end
+--    end,
+--    desc = "Restore last session automatically"
+--})
 
 require('gitsigns').setup()
 
@@ -178,26 +227,29 @@ cmp.setup({
             { name = 'buffer' },
         }, {
         { name = 'path' },
-        { name = 'spell' },
+        --{ name = 'spell' },
     }
     )
 })
 -- opt.foldmethod='expr'
 -- opt.foldexpr='nvim_treesitter#foldexpr()'
+local open_diagnostics = function()
+    local opts = {
+        focusable = false,
+        close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
+        border = 'rounded',
+        source = 'always',
+        prefix = ' ',
+        scope = 'cursor',
+    }
+    vim.diagnostic.open_float(nil, opts)
+end
 
 local on_attach = function(client)
     vim.api.nvim_create_autocmd('CursorHold', {
         buffer = bufnr,
         callback = function()
-            local opts = {
-                focusable = false,
-                close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
-                border = 'rounded',
-                source = 'always',
-                prefix = ' ',
-                scope = 'cursor',
-            }
-            vim.diagnostic.open_float(nil, opts)
+            --open_diagnostics()
         end
     })
     require 'lsp_signature'.on_attach() -- Note: add in lsp client on-attach
@@ -344,6 +396,9 @@ for ls, cfg in pairs({
     },
 }) do lsp[ls].setup(cfg) end
 
+
+require("arg_buffer").setup()
+
 -- Key mappings
 nmap('Q', 'gq', 'Format lines `gq`')
 
@@ -356,6 +411,7 @@ nmap('°', '^', 'Go to start of the line')
 -- nmap('<leader>l', '<cmd>!leo <C-r><C-w><CR>')
 
 nmap('<leader>ö', n_add_word, 'Add word to dictionary')
+nmap('<F3>', require("arg_buffer").open, 'Show the arg list buffer')
 
 -- nmap('<F12>', '<cmd>split ~/notes<CR>')
 
@@ -422,6 +478,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 
 
+nmap("<leader>fp", function() vim.cmd("Telescope projections") end, 'Telescope projections')
 nmap('<leader>ff', require('telescope.builtin').find_files, 'Telescope find files')
 nmap('<leader>fg', require('telescope.builtin').live_grep, 'Telescope live grep')
 nmap('<leader>fb', require('telescope.builtin').buffers, 'Telescope buffers')
