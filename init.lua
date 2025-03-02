@@ -146,6 +146,51 @@ require('nvim-treesitter.configs').setup {
     },
 }
 
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+      enable = true,
+
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        -- You can optionally set descriptions to the mappings (used in the desc parameter of
+        -- nvim_buf_set_keymap) which plugins like which-key display
+        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+        -- You can also use captures from other query groups like `locals.scm`
+        ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+      },
+      -- You can choose the select mode (default is charwise 'v')
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * method: eg 'v' or 'o'
+      -- and should return the mode ('v', 'V', or '<c-v>') or a table
+      -- mapping query_strings to modes.
+      selection_modes = {
+        ['@parameter.outer'] = 'v', -- charwise
+        ['@function.outer'] = 'V', -- linewise
+        ['@class.outer'] = '<c-v>', -- blockwise
+      },
+      -- If you set this to `true` (default is `false`) then any textobject is
+      -- extended to include preceding or succeeding whitespace. Succeeding
+      -- whitespace has priority in order to act similarly to eg the built-in
+      -- `ap`.
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * selection_mode: eg 'v'
+      -- and should return true or false
+      include_surrounding_whitespace = true,
+    },
+  },
+}
+
 require('telescope').setup {
     pickers = {
         man_pages = {
@@ -192,7 +237,7 @@ end
 local luasnip = require('luasnip')
 local snippet = require('snippet')
 luasnip.add_snippets(nil, snippet)
-local cmp = require 'cmp'
+local cmp = require('cmp')
 cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine
@@ -208,7 +253,7 @@ cmp.setup({
     mapping = cmp.mapping.preset.insert({
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = function(fallback)
+        ['<C-Space>'] = function(_)
             if cmp.visible() then
                 cmp.confirm({ select = true })
             else
@@ -223,6 +268,7 @@ cmp.setup({
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'crates' },
+            { name = 'cmp_pandoc' },
         }, {
             { name = 'buffer' },
         }, {
@@ -231,6 +277,7 @@ cmp.setup({
     }
     )
 })
+require'cmp_pandoc'.setup()
 -- opt.foldmethod='expr'
 -- opt.foldexpr='nvim_treesitter#foldexpr()'
 local open_diagnostics = function()
@@ -379,11 +426,12 @@ for ls, cfg in pairs({
         capabilities = capabilities,
     },
     clangd = {
-        cmd = {"/usr/local/bin/clangd15"},
+        cmd = {"/usr/local/bin/clangd17"},
         on_attach = on_attach,
         capabilities = capabilities,
     },
     lua_ls = {
+        cmd = {"/home/tant/git/lua-language-server-rust/bin/lua-language-server"},
         on_attach = on_attach,
         capabilities = capabilities,
         settings = {
@@ -395,6 +443,14 @@ for ls, cfg in pairs({
 }
     },
 }) do lsp[ls].setup(cfg) end
+
+local null_ls = require("null-ls")
+
+null_ls.setup({
+    sources = {
+        null_ls.builtins.completion.spell,
+    },
+})
 
 
 require("arg_buffer").setup()
@@ -442,15 +498,12 @@ nmap('<C-L>', ':nohlsearch<CR><C-L>', 'clear higlight')
 tmap('<ESC>', '<C-\\><C-n>')
 tmap('<C-v><ESC>', '<ESC>')
 
-require('which-key').register({
-    f = {
-        name = 'find with Telescope'
-    },
-    l = {
-        name = 'LSP'
-    },
-}, { prefix = '<leader>' }
-)
+require('which-key').add({
+    { "<leader>f", group = "find with Telescope" },
+    { "<leader>l", group = "LSP" },
+  }
+ )
+
 
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',

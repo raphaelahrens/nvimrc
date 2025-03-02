@@ -23,6 +23,10 @@
   category: default
   opt: false
   local: false
+- name: aspeddro/cmp-pandoc.nvim
+  category: default
+  opt: false
+  local: false
 - name: bronson/vim-visual-star-search
   category: default
   opt: false
@@ -115,6 +119,14 @@
   category: default
   opt: false
   local: false
+- name: nvim-treesitter/nvim-treesitter-textobjects
+  category: default
+  opt: false
+  local: false
+- name: nvimtools/none-ls.nvim
+  category: default
+  opt: false
+  local: false
 - name: raphaelahrens/spell
   category: default
   opt: false
@@ -140,6 +152,10 @@
   opt: false
   local: false
 - name: sindrets/diffview.nvim
+  category: default
+  opt: false
+  local: false
+- name: tjdevries/vlog.nvim
   category: default
   opt: false
   local: false
