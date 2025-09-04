@@ -393,9 +393,16 @@ require('litee.symboltree').setup({
 })
 require('litee.calltree').setup({})
 
-require("symbols-outline").setup()
-
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local null_ls = require("null-ls")
+
+-- null_ls.setup({
+--     sources = {
+--         null_ls.builtins.completion.spell,
+--     },
+-- })
+
 
 local lsp = require('lspconfig')
 for ls, cfg in pairs({
@@ -443,15 +450,6 @@ for ls, cfg in pairs({
 }
     },
 }) do lsp[ls].setup(cfg) end
-
-local null_ls = require("null-ls")
-
-null_ls.setup({
-    sources = {
-        null_ls.builtins.completion.spell,
-    },
-})
-
 
 require("arg_buffer").setup()
 
