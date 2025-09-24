@@ -43,10 +43,6 @@
   category: default
   opt: false
   local: false
-- name: gnikdroy/projections.nvim
-  category: default
-  opt: false
-  local: false
 - name: hrsh7th/cmp-buffer
   category: default
   opt: false
@@ -115,10 +111,12 @@
   category: default
   opt: false
   local: false
+  branch: main
 - name: nvim-treesitter/nvim-treesitter-textobjects
   category: default
   opt: false
   local: false
+  branch: main
 - name: nvimtools/none-ls.nvim
   category: default
   opt: false

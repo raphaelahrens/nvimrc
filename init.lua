@@ -128,68 +128,69 @@ require('nord').set()
 
 require('which-key').setup({})
 
-require('nvim-treesitter.configs').setup {
-    ensure_installed = 'all', -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    highlight = {
-        enable = true, -- false will disable the whole extension
-        disable = {}, -- list of language that will be disabled
-        additional_vim_regex_highlighting = false,
-    },
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = 'gnn',
-            node_incremental = 'grn',
-            scope_incremental = 'grc',
-            node_decremental = 'grm',
-        },
-    },
+require'nvim-treesitter'.setup {
+  -- Directory to install parsers and queries to
+  install_dir = vim.fn.stdpath('data') .. '/site'
+}
+require'nvim-treesitter'.install {
+    'bash',
+    'c',
+    'diff',
+    'dot',
+    'json',
+    'html',
+    'lua',
+    'make',
+    'markdown',
+    'python',
+    'rust',
+    'tmux',
 }
 
-require'nvim-treesitter.configs'.setup {
-  textobjects = {
-    select = {
-      enable = true,
-
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
-
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        -- You can optionally set descriptions to the mappings (used in the desc parameter of
-        -- nvim_buf_set_keymap) which plugins like which-key display
-        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-        -- You can also use captures from other query groups like `locals.scm`
-        ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-      },
-      -- You can choose the select mode (default is charwise 'v')
-      --
-      -- Can also be a function which gets passed a table with the keys
-      -- * query_string: eg '@function.inner'
-      -- * method: eg 'v' or 'o'
-      -- and should return the mode ('v', 'V', or '<c-v>') or a table
-      -- mapping query_strings to modes.
-      selection_modes = {
-        ['@parameter.outer'] = 'v', -- charwise
-        ['@function.outer'] = 'V', -- linewise
-        ['@class.outer'] = '<c-v>', -- blockwise
-      },
-      -- If you set this to `true` (default is `false`) then any textobject is
-      -- extended to include preceding or succeeding whitespace. Succeeding
-      -- whitespace has priority in order to act similarly to eg the built-in
-      -- `ap`.
-      --
-      -- Can also be a function which gets passed a table with the keys
-      -- * query_string: eg '@function.inner'
-      -- * selection_mode: eg 'v'
-      -- and should return true or false
-      include_surrounding_whitespace = true,
-    },
-  },
-}
+--require'nvim-treesitter.configs'.setup {
+--  textobjects = {
+--    select = {
+--      enable = true,
+--
+--      -- Automatically jump forward to textobj, similar to targets.vim
+--      lookahead = true,
+--
+--      keymaps = {
+--        -- You can use the capture groups defined in textobjects.scm
+--        ["af"] = "@function.outer",
+--        ["if"] = "@function.inner",
+--        ["ac"] = "@class.outer",
+--        -- You can optionally set descriptions to the mappings (used in the desc parameter of
+--        -- nvim_buf_set_keymap) which plugins like which-key display
+--        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+--        -- You can also use captures from other query groups like `locals.scm`
+--        ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+--      },
+--      -- You can choose the select mode (default is charwise 'v')
+--      --
+--      -- Can also be a function which gets passed a table with the keys
+--      -- * query_string: eg '@function.inner'
+--      -- * method: eg 'v' or 'o'
+--      -- and should return the mode ('v', 'V', or '<c-v>') or a table
+--      -- mapping query_strings to modes.
+--      selection_modes = {
+--        ['@parameter.outer'] = 'v', -- charwise
+--        ['@function.outer'] = 'V', -- linewise
+--        ['@class.outer'] = '<c-v>', -- blockwise
+--      },
+--      -- If you set this to `true` (default is `false`) then any textobject is
+--      -- extended to include preceding or succeeding whitespace. Succeeding
+--      -- whitespace has priority in order to act similarly to eg the built-in
+--      -- `ap`.
+--      --
+--      -- Can also be a function which gets passed a table with the keys
+--      -- * query_string: eg '@function.inner'
+--      -- * selection_mode: eg 'v'
+--      -- and should return true or false
+--      include_surrounding_whitespace = true,
+--    },
+--  },
+--}
 
 require('telescope').setup {
     pickers = {
@@ -198,10 +199,6 @@ require('telescope').setup {
         }
     },
 }
-
-require("projections").setup({
-    auto_restore = true,
-})
 
 ---- Bind <leader>fp to Telescope projections
 --require('telescope').load_extension('projections')
@@ -410,21 +407,10 @@ for ls, cfg in pairs({
         on_attach = on_attach,
         capabilities = capabilities,
         settings = {
-            ["rust-analyzer"] = {
-                imports = {
-                    granularity = {
-                        group = "module",
-                    },
-                    prefix = "self",
-                },
-                cargo = {
-                    buildScripts = {
-                        enable = true,
-                    },
-                },
-                procMacro = {
-                    enable = true
-                },
+            ['rust-analyzer'] = {
+                diagnostics = {
+                    enable = false;
+                }
             }
         }
     },
@@ -449,7 +435,10 @@ for ls, cfg in pairs({
         }
 }
     },
-}) do lsp[ls].setup(cfg) end
+}) do 
+    vim.lsp.config(ls, cfg)
+    vim.lsp.enable(ls)
+end
 
 require("arg_buffer").setup()
 
