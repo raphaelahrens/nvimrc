@@ -299,18 +299,6 @@ local on_attach = function(client)
     require 'lsp_signature'.on_attach() -- Note: add in lsp client on-attach
 end
 
--- configure the litee.nvim library 
-require('litee.lib').setup({
-    tree = {
-        icon_set = "nerd"
-    },
-    panel = {
-        orientation = "right",
-        panel_size  = 30
-    }
-})
-
-
 local icon_set = {
     Account         = "🗣",
     Array           = "",
@@ -382,13 +370,6 @@ local icon_set = {
     Variable        = "",
 }
 
-
--- configure litee-symboltree.nvim
-require('litee.symboltree').setup({
-    map_resize_keys = false,
-    icon_set_custom = icon_set
-})
-require('litee.calltree').setup({})
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
